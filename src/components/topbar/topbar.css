@@ -1,0 +1,58 @@
+.topbarWrapper {
+    background-color: lightgrey;
+    height: 80px;
+    width: 100%;
+    position: fixed;
+    transition: all 0.25s ease-in-out;
+}
+
+.topbarWrapper.collapsed {
+    transform: translateY(-65px);
+}
+
+.topbar {
+    height: 66px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+}
+
+.toggleButton {
+    width: 100%;
+    height: 14px;
+    position: relative;
+    bottom: 0;
+}
+
+.playerControlWrapper, .exercisePanelWrapper, .clockWrapper {
+    height: 54px;
+}
+
+.clockSeparation {
+    width: 100%;
+    border-bottom: 1px solid darkgray;
+}
+
+.clock {
+    width: 130px;
+    border: 1px solid darkgray;
+}
+
+.playercontrol {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+}
+
+
+.exercisePanel {
+    border: 1px solid darkgray;
+    min-width: 600px;
+    max-width: 600px;
+    height: 100%;
+}
