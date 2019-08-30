@@ -1,0 +1,14 @@
+.loginWrapper{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(../../img/bg.jpg);
+}
+
+.login{
+    background-color: white;
+}

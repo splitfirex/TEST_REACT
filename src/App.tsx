@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import {TopbarContainer} from "./components/topbar/topbar.container";
-import { initializeIcons } from '@uifabric/icons';
-import { loadTheme } from 'office-ui-fabric-react';
+import {initializeIcons} from '@uifabric/icons';
+import {loadTheme} from 'office-ui-fabric-react';
+import {Route, BrowserRouter as Router} from 'react-router-dom';
+
+import {LoginContainer} from "./components/login/login.container";
+import {MainframeContainer} from "./components/mainframe/mainframe.container";
 
 loadTheme({
     palette: {
@@ -34,11 +37,14 @@ loadTheme({
 initializeIcons();
 
 const App: React.FC = () => {
-  return (
-    <div className="App">
-      <TopbarContainer/>
-    </div>
-  );
+    return (
+        <Router>
+            <div className="App">
+                <Route exact path="/" component={LoginContainer}/>
+                <Route exact path="/mainframe" component={MainframeContainer}/>
+            </div>
+        </Router>
+    );
 }
 
 export default App;

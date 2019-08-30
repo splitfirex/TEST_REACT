@@ -104,6 +104,7 @@ class PlayerControl extends React.Component<{ pause: boolean }, { pause: boolean
     }
 
     playClick() {
+
         this.setState({pause: !this.state.pause});
     }
 
