@@ -1,10 +1,10 @@
 import * as React from "react";
+import {useEffect, useState} from "react";
 import {PrimaryButton, Spinner, TextField} from "office-ui-fabric-react";
-import {Stack, IStackProps} from 'office-ui-fabric-react/lib/Stack';
-import {LoginService} from "../../services/workers";
+import {IStackProps, Stack} from 'office-ui-fabric-react/lib/Stack';
+import {LoginService, SubSystemService, TickService} from "../../services/workers";
 import {ILoginInput} from "../../wsdl/SCGALoginServiceService/servicioLoginPort";
 import {Redirect} from "react-router";
-import {useEffect, useState} from "react";
 import "./login.css";
 
 const LoginComponent: React.FC = () => {
@@ -15,18 +15,28 @@ const LoginComponent: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState(null);
 
     useEffect(() => {
-        LoginService.onmessage = (evt: any) => {
-            if (evt.data.method == "Login") {
-                if (evt.data.payload.error) {
-                    setErrorMessage(evt.data.payload.error)
-                } else if (evt.data.payload.result.login.rolesUsuario.length > 0) {
-                    setLogged(true);
-                }
-            }
-            setLoginTrying(false);
-            console.log(evt);
+        LoginService.port.onmessage = handleLogin;
+        TickService.port.onmessage = (evt: any) => {
+            console.log(evt.data)
         }
+
+        SubSystemService.port.onmessage = (evt: any) => {
+            console.log(evt.data);
+        }
+
     });
+
+    const handleLogin = (evt: MessageEvent) => {
+        if (evt.data.method === "Login") {
+            if (evt.data.payload.error) {
+                setErrorMessage(evt.data.payload.error)
+            } else if (evt.data.payload.result.login.rolesUsuario.length > 0) {
+                setLogged(true);
+            }
+        }
+        setLoginTrying(false);
+        console.log(evt);
+    }
 
     const handleSubmit = (evt: any) => {
         setLoginTrying(true);
@@ -38,7 +48,7 @@ const LoginComponent: React.FC = () => {
             idSalaFormacion: 1,
             nombrePuesto: "1234"
         }
-        LoginService.postMessage({method: "Login", payload: args});
+        LoginService.port.postMessage({method: "Login", payload: args});
     }
     const columnProps: Partial<IStackProps> = {
         tokens: {childrenGap: 15},

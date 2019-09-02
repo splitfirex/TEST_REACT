@@ -1,6 +1,8 @@
 import * as React from "react";
 import {Redirect} from 'react-router';
 import {TopbarContainer} from "./topbar/topbar.container";
+import {TabManagerContainer} from "./tabManager/tabManager.container";
+import "./mainframe.css"
 
 interface Props {
 
@@ -21,8 +23,13 @@ export default class TopbarComponent extends React.Component<Props, State> {
 
     render() {
         if (!this.state.logged) {
-            return <Redirect push to="/" />;
+            return <Redirect push to="/"/>;
         }
-        return <TopbarContainer/>;
+        return <div className="mainframeWrapper">
+            <div className="mainframe">
+                <TopbarContainer/>
+                <TabManagerContainer/>
+            </div>
+        </div>;
     }
 }

@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 import {initializeIcons} from '@uifabric/icons';
 import {loadTheme} from 'office-ui-fabric-react';
-import {Route, BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import {LoginContainer} from "./components/login/login.container";
 import {MainframeContainer} from "./components/mainframe/mainframe.container";

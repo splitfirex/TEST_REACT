@@ -34,6 +34,8 @@ export default class TopbarComponent extends React.Component<Props, State> {
     }
 
     handleClick() {
+
+
         this.setState({isOpen: !this.state.isOpen});
     }
 
@@ -104,7 +106,8 @@ class PlayerControl extends React.Component<{ pause: boolean }, { pause: boolean
     }
 
     playClick() {
-
+        // @ts-ignore
+        document.getElementById("EST05E_CV1_1").setAttribute("xlink:href", "#seccionOcupada");
         this.setState({pause: !this.state.pause});
     }
 

@@ -4,21 +4,25 @@ import {ILoginInput, ILoginOutput, IservicioLoginPortSoap} from "../wsdl/SCGALog
 const url = 'http://localhost:9080/sct/loginWS?wsdl';
 const soapClient = soap.createClientAsync(url);
 
-const ctx: Worker = self as any;
+const ctx: any = self as any;
 
-ctx.onmessage = (ev: MessageEvent) => {
-    if (ev.data.method = "Login")
-        Login(ev.data.method, ev.data.payload);
+ctx.onconnect = (ev: MessageEvent) => {
+    let port = ev.ports[0];
+    console.log("shared ok");
+    port.onmessage = (ev: MessageEvent) => {
+        console.log("mensaje ok");
+        if (ev.data.method = "Login")
+            Login(port, ev.data.method, ev.data.payload);
+    }
 }
 
-function Login(method: string, args: ILoginInput) {
+function Login(port: any, method: string, args: ILoginInput) {
     soapClient.then((client: IservicioLoginPortSoap) => {
         return client.Login(args, (err: any, result: ILoginOutput) => {
             if (err != null)
-                ctx.postMessage({method: method, payload: {error: "Error iniciando sesion"}})
+                port.postMessage({method: method, payload: {error: "Error iniciando sesion"}})
             else
-                ctx.postMessage({method: method, payload: {result: result}})
-
+                port.postMessage({method: method, payload: {result: result}})
         });
     });
 }
