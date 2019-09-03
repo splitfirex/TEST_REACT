@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useEffect} from "react";
-import Video from "../../../svg/EST05E.svg"
+import Videografico from "../../../svg/EST05E.svg"
 import ReactSVG from 'react-svg'
 
 
@@ -15,7 +15,7 @@ const TabManagerComponent: React.FC = () => {
             console.log("PASSEE");
             e.preventDefault();
             e.stopPropagation();
-            if (e && (e.which == 2 || e.button == 4)) {
+            if (e && (e.which === 2 || e.button === 4)) {
                 console.log(e)
             }
         }
@@ -23,7 +23,7 @@ const TabManagerComponent: React.FC = () => {
 
     return <div>
 
-        <ReactSVG src={Video}/>
+        <ReactSVG src={Videografico}/>
 
     </div>
 }

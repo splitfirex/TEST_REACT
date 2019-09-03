@@ -1,15 +1,47 @@
 import {Client} from '@stomp/stompjs';
-import svgFactory from "./core/sstypes/svgFactory";
+// @ts-ignore
+import svgFactory from "./core/sstypes/svgFactory.tsx";
 import svgObject from "./core/sstypes/svgObject";
+import fastXML from "fast-xml-parser";
 
 const ctx: any = self as any;
 
+'use strict'
+
 let SubsystemContext: any = {};
 let Subsystem: Map<string, svgObject> = new Map();
+let workers: any = {};
 
 ctx.onconnect = (ev: MessageEvent) => {
     let port = ev.ports[0];
 
+    port.onmessage = (evt: MessageEvent) => {
+        if (evt.data.method = "addService") {
+            workers[evt.data.payload.service] = evt.ports[0];
+            workers.EjercicioService.onmessage = worldXML;
+            workers.EjercicioService.postMessage({method: "getXMLMundo", payload: {}});
+        }
+    }
+
+    const worldXML = (evt: MessageEvent) => {
+        var options = {
+            attributeNamePrefix : "@_",
+            attrNodeName: "attr", //default is 'false'
+            textNodeName : "#text",
+            ignoreAttributes : true,
+            ignoreNameSpace : false,
+            allowBooleanAttributes : false,
+            parseNodeValue : true,
+            parseAttributeValue : false,
+            trimValues: true,
+            cdataTagName: "__cdata", //default is 'false'
+            cdataPositionChar: "\\c",
+            localeRange: "", //To support non english character in tag/attribute values.
+            parseTrueNumberOnly: false
+        };
+        let xml = fastXML.parse(evt.data.payload!.result,options);
+        console.log(xml);
+    }
 
     const client = new Client({
         brokerURL: "ws://localhost:8743/websocket-test/websocket",
@@ -30,11 +62,11 @@ ctx.onconnect = (ev: MessageEvent) => {
                 let clazz = parsedMessages[element].clase;
                 if (SubsystemContext[key] === undefined) {
                     SubsystemContext[key] = {[attr]: value, clazz: clazz}
-                    Subsystem.set(key,svgFactory.getSVGObject(key, clazz));
-                    Subsystem.get(key)!.updateAttr(attr,value);
+                    Subsystem.set(key, svgFactory(key, clazz));
+                    Subsystem.get(key)!.updateAttr(attr, value);
                 } else {
                     SubsystemContext[key][attr] = value;
-                    Subsystem.get(key)!.updateAttr(attr,value);
+                    Subsystem.get(key)!.updateAttr(attr, value);
                 }
 
 
@@ -50,11 +82,11 @@ ctx.onconnect = (ev: MessageEvent) => {
                 let clazz = parsedMessages[element].clase;
                 if (SubsystemContext[key] === undefined) {
                     SubsystemContext[key] = {[attr]: value, clazz: clazz}
-                    Subsystem.set(key,svgFactory.getSVGObject(key, clazz));
-                    Subsystem.get(key)!.updateAttr(attr,value);
+                    Subsystem.set(key, svgFactory(key, clazz));
+                    Subsystem.get(key)!.updateAttr(attr, value);
                 } else {
                     SubsystemContext[key][attr] = value;
-                    Subsystem.get(key)!.updateAttr(attr,value);
+                    Subsystem.get(key)!.updateAttr(attr, value);
                 }
             });
             console.log(parsedMessages);
