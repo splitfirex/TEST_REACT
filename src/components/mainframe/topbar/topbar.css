@@ -2,12 +2,7 @@
     background-color: lightgrey;
     height: 80px;
     width: 100%;
-    position: fixed;
     transition: all 0.25s ease-in-out;
-}
-
-.topbarWrapper.collapsed {
-    transform: translateY(-65px);
 }
 
 .topbar {

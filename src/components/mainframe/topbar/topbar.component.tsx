@@ -1,6 +1,6 @@
 import * as React from "react";
 import "./topbar.css";
-import {IconButton, ProgressIndicator} from "office-ui-fabric-react";
+import {IconButton} from "office-ui-fabric-react";
 import {FontSizes} from "@uifabric/fluent-theme";
 
 interface Props {
@@ -46,22 +46,6 @@ export default class TopbarComponent extends React.Component<Props, State> {
                     {this.state.displayClock && <PlayerControl {...this.state.playerControl} />}
                     {this.state.displayClock && <ExercisePanel {...this.state.exercisePanel} />}
                     {this.state.displayClock && <Clock {...this.state.clock} />}
-                </div>
-                <div className="toggleButton">
-                    <IconButton
-                        styles={{root: {width: "100%", height: "14px"}}}
-                        onClick={() => this.handleClick()}
-                        iconProps={{
-                            iconName: this._toggleIcon(),
-                            styles: {root: {fontSize: FontSizes.size10}}
-                        }}
-                    />
-                    <ProgressIndicator
-                        styles={{
-                            itemProgress: {height: "10px", padding: "0px"},
-                            root: {width: "100%", position: "absolute", bottom: "-10px"}
-                        }}
-                    />
                 </div>
             </div>
         );
