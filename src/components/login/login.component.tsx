@@ -3,11 +3,12 @@ import {useEffect} from "react";
 import {Label, PrimaryButton, Spinner, TextField} from "office-ui-fabric-react";
 import {IStackProps, Stack} from 'office-ui-fabric-react/lib/Stack';
 import {Redirect} from "react-router";
+import {MainService} from "../../core/worker/workers";
+import {C_SESSION} from "../../core/context/sessionContext.service";
+import {ERROR, SUCCESS} from "../../core/context/constants";
+import {compare} from "../../core/utils/ObjectUtils"
+
 import "./login.css";
-import {ContextService} from "../../core/worker/workers";
-import {C_SESSION} from "../../core/core/context/sessionContext.service";
-import {ERROR, SUCCESS} from "../../core/core/context/contextCodes";
-import compare from "../../core/core/utils/ObjectUtils"
 
 
 interface IUser {
@@ -25,12 +26,12 @@ const LoginComponent: React.FC = () => {
     const [hasError, setHasError] = React.useState<string>("");
 
     useEffect(() => {
-        ContextService.port.addEventListener("message", function (evt: MessageEvent) {
+        MainService.port.addEventListener("message", function (evt: MessageEvent) {
             console.log("pase");
             if (compare(evt.data.c, C_SESSION.TRY_LOGIN)) {
-                if (evt.data.status == SUCCESS)
+                if (evt.data.status === SUCCESS)
                     setLogged(true);
-                if (evt.data.status == ERROR) {
+                if (evt.data.status === ERROR) {
                     setLoginTrying(false);
                     setHasError(evt.data.payload);
 
@@ -61,7 +62,7 @@ const LoginComponent: React.FC = () => {
                 username: tryLogin.username.value,
                 password: tryLogin.password.value
             }
-            ContextService.port.postMessage({
+            MainService.port.postMessage({
                 c: C_SESSION.TRY_LOGIN, payload: sessionData
             })
         }
