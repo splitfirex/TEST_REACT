@@ -9,6 +9,8 @@
 
 .tabManager{
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .container--ph {
@@ -26,12 +28,13 @@
 
 }
 
-.pivot-content{left: 0; right: 0; bottom: 0; }
-.pivot-content iframe {width: 100%; height: 100%;}
-
-#myIframe
-{
-    position: relative;
+.iframeContentWrapper{
+    display: flex;
     height: 100%;
+}
+
+.iframeContent
+{
     width: 100%;
+    height: 100%;
 }

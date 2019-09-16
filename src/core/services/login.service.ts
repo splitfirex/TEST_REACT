@@ -6,7 +6,7 @@ class LoginService {
   private static instance: LoginService;
 
   public static getInstance() : LoginService{
-      if(LoginService.instance === null) LoginService.instance = new LoginService();
+      if(LoginService.instance === undefined) LoginService.instance = new LoginService();
       return LoginService.instance;
   }
 

@@ -4,6 +4,7 @@ const ctx: any = self as any;
 
 const connections: any = [];
 
+
 ctx.onconnect = (ev: MessageEvent) => {
     let port = ev.ports[0];
     connections.push(port);
@@ -14,6 +15,7 @@ ctx.onconnect = (ev: MessageEvent) => {
 }
 
 function notify(data: any) {
+    console.log(connections);
     connections.forEach(function (connection: any) {
         connection.postMessage(data);
     });

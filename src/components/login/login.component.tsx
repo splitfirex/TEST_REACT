@@ -3,10 +3,7 @@ import {useEffect} from "react";
 import {Label, PrimaryButton, Spinner, TextField} from "office-ui-fabric-react";
 import {IStackProps, Stack} from 'office-ui-fabric-react/lib/Stack';
 import {Redirect} from "react-router";
-import {MainService} from "../../core/worker/workers";
-import {C_SESSION} from "../../core/context/sessionContext.service";
-import {ERROR, SUCCESS} from "../../core/context/constants";
-import {compare} from "../../core/utils/ObjectUtils"
+import LoginController from "./login.controller"
 
 import "./login.css";
 
@@ -22,23 +19,16 @@ const LoginComponent: React.FC = () => {
         password: {value: "", error: ""}
     })
     const [logged, setLogged] = React.useState<boolean>(false);
+    const [usertoken, setUsertoken] = React.useState<string>("");
     const [loginTrying, setLoginTrying] = React.useState<boolean>(false);
     const [hasError, setHasError] = React.useState<string>("");
 
     useEffect(() => {
-        MainService.port.addEventListener("message", function (evt: MessageEvent) {
-            console.log("pase");
-            if (compare(evt.data.c, C_SESSION.TRY_LOGIN)) {
-                if (evt.data.status === SUCCESS)
-                    setLogged(true);
-                if (evt.data.status === ERROR) {
-                    setLoginTrying(false);
-                    setHasError(evt.data.payload);
-
-                }
-            }
-        }, false);
+        if(LoginController.init()){
+            setLogged(true);
+        };
     }, []);
+
 
     const handleSubmit = (evt: any) => {
         evt.preventDefault();
@@ -58,13 +48,12 @@ const LoginComponent: React.FC = () => {
 
         if (tLog) {
             setLoginTrying(true);
-            let sessionData = {
-                username: tryLogin.username.value,
-                password: tryLogin.password.value
-            }
-            MainService.port.postMessage({
-                c: C_SESSION.TRY_LOGIN, payload: sessionData
-            })
+            LoginController.tryLogin(tryLogin.username.value, tryLogin.password.value)
+                .then(() => setLogged(true))
+                .catch((e: any) => {
+                    setHasError(e);
+                    setLoginTrying(false);
+                });
         }
     }
     const columnProps: Partial<IStackProps> = {
@@ -74,7 +63,7 @@ const LoginComponent: React.FC = () => {
 
     return (
         <div className="loginWrapper">
-            {logged && <Redirect push to="/mainframe"/>}
+            {logged && <Redirect push to={"/mainframe?usertoken=" + usertoken}/>}
             <div className="login">
                 <Stack horizontal tokens={{childrenGap: 50}} styles={{root: {padding: 20}}}>
                     <form onSubmit={e => handleSubmit(e)}>
@@ -95,7 +84,7 @@ const LoginComponent: React.FC = () => {
                             {!loginTrying &&
                             <PrimaryButton type="submit" text="Iniciar sesion" allowDisabledFocus
                                            onClick={e => handleSubmit(e)}/>}
-                            {loginTrying && <div>
+                            {loginTrying && !hasError && <div>
                                 <Spinner label="Iniciando sesion..."/>
                             </div>}
                             {hasError && <Label style={{color: "red", textAlign: "center"}}>{hasError}</Label>}

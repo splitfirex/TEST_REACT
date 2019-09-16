@@ -1,6 +1,6 @@
-import {MetaappContext} from "../context/metaappContext";
-import {SessionContextService} from "../context/sessionContext.service";
-import worldContext from "../context/worldContext.service";
+import {MetaappContext} from "../context/metaapp.context";
+import SessionContext from "../context/session.context";
+import worldContext from "../context/world.context.service";
 
 const ctx: any = self as any;
 
@@ -14,12 +14,13 @@ ctx.onconnect = (ev: MessageEvent) => {
     connections.push(port);
 
     port.onmessage = (evt: MessageEvent) => {
-        SessionContextService.process.call(ctx, notify, context, evt.data);
+        SessionContext.process( notify, context, evt.data);
         worldContext.call(ctx, notify, context, evt.data);
     }
 }
 
 function notify(data: any) {
+    console.log(connections);
     connections.forEach(function (connection: any) {
         connection.postMessage(data);
     });

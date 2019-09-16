@@ -91,7 +91,13 @@ class PlayerControl extends React.Component<{ pause: boolean }, { pause: boolean
 
     playClick() {
         // @ts-ignore
-        document.getElementById("EST05E_CV1_1").setAttribute("xlink:href", "#seccionOcupada");
+        let iframe: any = document.getElementById("videografico_iframe");
+        var innerDoc = (iframe.contentDocument)
+            ? iframe.contentDocument
+            : iframe.contentWindow.document;
+
+        if(this.state.pause)innerDoc.getElementById("EST05E_CV1_1").setAttribute("xlink:href", "#seccionOcupada");
+        if(!this.state.pause)innerDoc.getElementById("EST05E_CV1_1").setAttribute("xlink:href", "#seccion");
         this.setState({pause: !this.state.pause});
     }
 

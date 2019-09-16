@@ -25,7 +25,7 @@ class EjercicioService {
   private static instance: EjercicioService;
 
   public static getInstance() : EjercicioService{
-      if(EjercicioService.instance == null) EjercicioService.instance = new EjercicioService();
+      if(EjercicioService.instance === undefined) EjercicioService.instance = new EjercicioService();
       return EjercicioService.instance;
   }
   constructor() {

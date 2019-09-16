@@ -1,8 +1,8 @@
 import * as React from "react";
-import { useEffect } from "react";
+import {useEffect} from "react";
 import EjercicioSvc from "../../../core/services/ejercicio.service";
 import "./videographic.css";
-import { Spinner, SpinnerSize } from "office-ui-fabric-react";
+import {Spinner, SpinnerSize} from "office-ui-fabric-react";
 
 const VideographicComponent: React.FC = () => {
   let [htmlWorld, setHtmlWorld] = React.useState<any>();
@@ -26,7 +26,7 @@ const VideographicComponent: React.FC = () => {
       EjercicioSvc().getSVGMundo({
         arg0: {
           CP: true,
-          nombreFichero: "EST08C.svg"
+          nombreFichero: "EST05E.svg"
         }
       }),
       EjercicioSvc().getLibMundo(true)

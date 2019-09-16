@@ -6,6 +6,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import {LoginContainer} from "./components/login/login.container";
 import {MainframeContainer} from "./components/mainframe/mainframe.container";
+import {VideographicContainer} from "./components/mainframe/videographic/videographic.container";
 
 loadTheme({
     palette: {
@@ -42,6 +43,7 @@ const App: React.FC = () => {
             <div className="App">
                 <Route exact path="/login" component={LoginContainer}/>
                 <Route exact path="/mainframe" component={MainframeContainer}/>
+                <Route exact path="/videographic" component={VideographicContainer}/>
             </div>
         </Router>
     );
