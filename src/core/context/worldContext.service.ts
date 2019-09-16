@@ -1,4 +1,4 @@
-import {MetaappContext} from "./MetaappContext";
+import {MetaappContext} from "./metaappContext";
 
 export interface worldContext {
     context: any

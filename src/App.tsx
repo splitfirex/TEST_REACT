@@ -6,7 +6,6 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 import {LoginContainer} from "./components/login/login.container";
 import {MainframeContainer} from "./components/mainframe/mainframe.container";
-import {ContextSelectorContainer} from "./components/mainframe/contextSelector/contextSelector.container";
 
 loadTheme({
     palette: {
@@ -41,9 +40,8 @@ const App: React.FC = () => {
     return (
         <Router>
             <div className="App">
-                <Route exact path="/" component={LoginContainer}/>
+                <Route exact path="/login" component={LoginContainer}/>
                 <Route exact path="/mainframe" component={MainframeContainer}/>
-                <Route exact path="/contextSelector" component={ContextSelectorContainer}/>
             </div>
         </Router>
     );

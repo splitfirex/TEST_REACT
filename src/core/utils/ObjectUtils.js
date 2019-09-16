@@ -1,4 +1,4 @@
-const compare = function (x, y) {
+export const compare = function (x, y) {
     if (x === y) return true;
     // if both x and y are null or undefined and exactly the same
 
@@ -8,7 +8,7 @@ const compare = function (x, y) {
     if (x.constructor !== y.constructor) return false;
     // they must have the exact same prototype chain, the closest we can do is
     // test there constructor.
-
+    
     for (var p in x) {
         if (!x.hasOwnProperty(p)) continue;
         // other properties were tested using x.constructor === y.constructor
@@ -32,5 +32,3 @@ const compare = function (x, y) {
     }
     return true;
 }
-
-export default compare;

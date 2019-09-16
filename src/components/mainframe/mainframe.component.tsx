@@ -3,6 +3,7 @@ import {Redirect} from 'react-router';
 import {TopbarContainer} from "./topbar/topbar.container";
 import {TabManagerContainer} from "./tabManager/tabManager.container";
 import "./mainframe.css"
+import { VideographicContainer } from './videographic/videographic.container';
 
 interface Props {
 
@@ -23,7 +24,7 @@ export default class TopbarComponent extends React.Component<Props, State> {
 
     render() {
         if (!this.state.logged) {
-            return <Redirect push to="/"/>;
+            return <Redirect push to="/login"/>;
         }
         return <div className="mainframeWrapper">
             <div className="mainframe">
