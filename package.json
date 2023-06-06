@@ -17,7 +17,7 @@
     "@uifabric/fluent-theme": "^7.1.0",
     "blueprintjs": "0.0.8",
     "comlink": "^4.0.2",
-    "fast-xml-parser": "^3.12.20",
+    "fast-xml-parser": "^4.2.4",
     "he": "^1.2.0",
     "html-react-parser": "^0.9.1",
     "local-storage": "^2.0.0",
